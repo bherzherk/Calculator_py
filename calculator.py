@@ -32,6 +32,10 @@ class Calculator:
 
     def clear_display(self):
         self.display.delete(0, "end")
+        self.current = ''
+        self.operation_verif = False
+        self.op = ''
+        self.total = 0.0
 
     def compute(self):
         if self.current and self.op:
@@ -43,6 +47,8 @@ class Calculator:
                 self.total *= float(self.current)
             elif self.op == "/":
                 self.total /= float(self.current)
+            elif self.op == "%":
+                self.total = (self.total*float(self.current))/100
 
         self.display.delete(0, "end")
         self.display.insert("end", self.total)
