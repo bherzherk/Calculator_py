@@ -26,8 +26,20 @@ class Calculator:
                 col=0
                 row += 1
 
+    def clear_display(self):
+        self.display.delete(0, "end")
+
+    def compute(self):
+        print(f"\n[+] Equal to: ")
+
     def build_button(self, button, row, col):
-        butt = tk.Button(self.master, text=button, width=7, font=("Verdana", 14))
+        my_cmd = None
+        if button == "C":
+            my_cmd = self.clear_display
+        elif button == "=":
+            my_cmd = self.compute
+
+        butt = tk.Button(self.master, text=button, width=7, command=my_cmd, font=("Verdana", 14))
         butt.grid(row=row, column=col)
 
 root = tk.Tk()
