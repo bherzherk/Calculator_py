@@ -8,6 +8,8 @@ class Calculator:
         self.display.grid(row=0, column=0, columnspan=4)
         self.current = ''
         self.operation_verif = False
+        self.op = ''
+        self.total = 0.0
 
         row = 1
         col = 0
@@ -35,13 +37,27 @@ class Calculator:
         print(f"\n[+] Equal to: ")
 
     def press_but(self, key):
+        if self.operation_verif:
+            self.operation_verif = False
+
         self.display.insert("end", key)
 
-        if key in "1234567890" or ".":
+        if key in "1234567890" or key == ".":
             self.current += key
+        else:
+            if self.current:
+                if not self.op:
+                    self.total = float(self.current)
+                    self.current = ''
+        
+            self.operation_verif = True
+            self.op = key
 
         print(f"[+] You pressed: {key}")
         print(f"[+] the number is: {self.current}")
+        print(f"[+] Status Operation is: {self.operation_verif}")
+        print(f"[+] The operation is: {self.op}")
+        print(f"[+] The total is: {self.total}")
 
     def build_button(self, button, row, col):
         my_cmd = None
