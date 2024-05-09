@@ -15,7 +15,7 @@ class Calculator:
         col = 0
 
         buttons = [
-            "(", ")", "%", "/",
+            "sqrt", "pwr2", "%", "/",
             "7", "8", "9", "*",
             "4", "5", "6", "-",
             "1", "2", "3", "+",
@@ -34,7 +34,42 @@ class Calculator:
         self.display.delete(0, "end")
 
     def compute(self):
-        print(f"\n[+] Equal to: ")
+        if self.current and self.op:
+            if self.op == "+":
+                self.total += float(self.current)
+            elif self.op == "-":
+                self.total -= float(self.current)
+            elif self.op == "*":
+                self.total *= float(self.current)
+            elif self.op == "/":
+                self.total /= float(self.current)
+
+        self.display.delete(0, "end")
+        self.display.insert("end", self.total)
+
+    def power_2(self):
+        if self.operation_verif:
+            self.operation_verif = False
+
+        if self.current:
+            self.total = float(self.current)
+            self.total = self.total**2
+            self.current = ''
+
+        self.display.delete(0, "end")
+        self.display.insert("end", self.total)
+    
+    def square_root(self):
+        if self.operation_verif:
+            self.operation_verif = False
+
+        if self.current:
+            self.total = float(self.current)
+            self.total = self.total**0.5
+            self.current = ''
+
+        self.display.delete(0, "end")
+        self.display.insert("end", self.total)
 
     def press_but(self, key):
         if self.operation_verif:
@@ -65,6 +100,10 @@ class Calculator:
             my_cmd = lambda: self.clear_display()
         elif button == "=":
             my_cmd = lambda: self.compute()
+        elif button == "pwr2":
+            my_cmd = lambda: self.power_2()
+        elif button == "sqrt":
+            my_cmd = lambda: self.square_root()
         else:
             my_cmd = lambda: self.press_but(button)
 
