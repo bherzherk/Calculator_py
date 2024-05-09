@@ -6,6 +6,8 @@ class Calculator:
         self.master = master
         self.display = tk.Entry(self.master, width=15, font=("Arial", 32), bd=10, insertwidth=1, bg="#6fa54d", justify="right")
         self.display.grid(row=0, column=0, columnspan=4)
+        self.current = ''
+        self.operation_verif = False
 
         row = 1
         col = 0
@@ -32,12 +34,23 @@ class Calculator:
     def compute(self):
         print(f"\n[+] Equal to: ")
 
+    def press_but(self, key):
+        self.display.insert("end", key)
+
+        if key in "1234567890" or ".":
+            self.current += key
+
+        print(f"[+] You pressed: {key}")
+        print(f"[+] the number is: {self.current}")
+
     def build_button(self, button, row, col):
         my_cmd = None
         if button == "C":
-            my_cmd = self.clear_display
+            my_cmd = lambda: self.clear_display()
         elif button == "=":
-            my_cmd = self.compute
+            my_cmd = lambda: self.compute()
+        else:
+            my_cmd = lambda: self.press_but(button)
 
         butt = tk.Button(self.master, text=button, width=7, command=my_cmd, font=("Verdana", 14))
         butt.grid(row=row, column=col)
