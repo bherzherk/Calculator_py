@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import tkinter as tk
+from tkinter import messagebox
 
 class Calculator:
     def __init__(self, master):
@@ -30,6 +31,25 @@ class Calculator:
                 col=0
                 row += 1
 
+        self.master.bind("<Key>", self.key_press)
+    
+    def key_press(self, event):
+        key = event.char
+
+        if key == "\r": #enter
+            self.compute()
+            return
+        elif key == "\x08": # backspace
+            self.clear_display()
+            return
+        elif key == "p":
+            self.power_2()
+        elif key == "s":
+            self.square_root()
+        elif key in "1234567890" or key == "%" or key == "." or key in "+-/*":
+            self.press_but(key)
+
+
     def clear_display(self):
         self.display.delete(0, "end")
         self.current = ''
@@ -50,6 +70,7 @@ class Calculator:
             elif self.op == "%":
                 self.total = (self.total*float(self.current))/100
 
+
         self.display.delete(0, "end")
         self.display.insert("end", self.total)
 
@@ -60,8 +81,8 @@ class Calculator:
         if self.current:
             self.total = float(self.current)
             self.total = self.total**2
-            self.current = ''
-
+        
+        self.current = ''
         self.display.delete(0, "end")
         self.display.insert("end", self.total)
     
@@ -72,7 +93,7 @@ class Calculator:
         if self.current:
             self.total = float(self.current)
             self.total = self.total**0.5
-            self.current = ''
+        self.current = ''
 
         self.display.delete(0, "end")
         self.display.insert("end", self.total)
@@ -89,7 +110,7 @@ class Calculator:
             if self.current:
                 if not self.op:
                     self.total = float(self.current)
-                    self.current = ''
+                self.current = ''
         
             self.operation_verif = True
             self.op = key
@@ -117,7 +138,9 @@ class Calculator:
         butt.grid(row=row, column=col)
 
 root = tk.Tk()
+messagebox.showinfo("Instructions", "WELCOME\n Here some instruction when use kwyboard \nEnter: = \nBackspace: C \np: pwr2 \ns: sqrt")
 root.title("Calculator")
 root.resizable(width=False, height=False)
 my_app = Calculator(root)
+#
 root.mainloop()
