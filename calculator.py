@@ -115,12 +115,6 @@ class Calculator:
             self.operation_verif = True
             self.op = key
 
-        print(f"[+] You pressed: {key}")
-        print(f"[+] the number is: {self.current}")
-        print(f"[+] Status Operation is: {self.operation_verif}")
-        print(f"[+] The operation is: {self.op}")
-        print(f"[+] The total is: {self.total}")
-
     def build_button(self, button, row, col):
         my_cmd = None
         if button == "C":
@@ -142,5 +136,4 @@ messagebox.showinfo("Instructions", "WELCOME\n Here some instruction when use kw
 root.title("Calculator")
 root.resizable(width=False, height=False)
 my_app = Calculator(root)
-#
 root.mainloop()
